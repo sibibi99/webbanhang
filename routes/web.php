@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 //FrontEnd
 Route::get('/','App\Http\Controllers\HomeController@index');
+Route::post('/tim-kiem','App\Http\Controllers\HomeController@search');
+
 //Front End - Danh muc san pham Trang chu
 Route::get('/danh-muc-san-pham/{category_id}','App\Http\Controllers\CategoryProduct@show_category_home');
 Route::get('/thuong-hieu-san-pham/{brand_slug}','App\Http\Controllers\BrandProduct@show_brand_home');
@@ -19,6 +21,21 @@ Route::post('/update-cart-quantity','App\Http\Controllers\CartController@update_
 // Route::get('/gio-hang','CartController@gio_hang');
 // Route::get('/del-product/{session_id}','CartController@delete_product');
 // Route::get('/del-all-product','CartController@delete_all_product');
+
+//Checkout
+Route::get('/login-checkout','App\Http\Controllers\CheckoutController@login_checkout');
+Route::post('/add-customer','App\Http\Controllers\CheckoutController@add_customer');
+Route::get('/checkout','App\Http\Controllers\CheckoutController@checkout');
+Route::post('/save-checkout-customer','App\Http\Controllers\CheckoutController@save_checkout_customer');
+Route::get('/logout-checkout','App\Http\Controllers\CheckoutController@logout_checkout');
+Route::post('/login-customer','App\Http\Controllers\CheckoutController@login_customer');
+Route::get('/payment','App\Http\Controllers\CheckoutController@payment');
+Route::post('/order-place','App\Http\Controllers\CheckoutController@order_place');
+
+// Route::get('/del-fee','CheckoutController@del_fee');
+// Route::post('/calculate-fee','CheckoutController@calculate_fee');
+// Route::post('/select-delivery-home','CheckoutController@select_delivery_home');
+// Route::post('/confirm-order','CheckoutController@confirm_order');
 
 //Backend
 Route::get('/admin','App\Http\Controllers\AdminController@index');
