@@ -9,7 +9,16 @@ Route::get('/','App\Http\Controllers\HomeController@index');
 Route::get('/danh-muc-san-pham/{category_id}','App\Http\Controllers\CategoryProduct@show_category_home');
 Route::get('/thuong-hieu-san-pham/{brand_slug}','App\Http\Controllers\BrandProduct@show_brand_home');
 Route::get('/chi-tiet-san-pham/{product_id}','App\Http\Controllers\ProductController@details_product');
-
+//Cart
+Route::post('/save-cart','App\Http\Controllers\CartController@save_cart');
+Route::get('/show-cart','App\Http\Controllers\CartController@show_cart');
+Route::get('/delete-to-cart/{rowId}','App\Http\Controllers\CartController@delete_to_cart');
+Route::post('/update-cart-quantity','App\Http\Controllers\CartController@update_cart_quantity');
+// Route::post('/update-cart','CartController@update_cart');
+// Route::post('/add-cart-ajax','CartController@add_cart_ajax');
+// Route::get('/gio-hang','CartController@gio_hang');
+// Route::get('/del-product/{session_id}','CartController@delete_product');
+// Route::get('/del-all-product','CartController@delete_all_product');
 
 //Backend
 Route::get('/admin','App\Http\Controllers\AdminController@index');

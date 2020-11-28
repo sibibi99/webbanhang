@@ -40,7 +40,7 @@
 			<h2>{{$value->product_name}}</h2>
 			<p>Mã ID: {{$value->product_id}}</p>
 			<img src="images/product-details/rating.png" alt="" />
-
+			{{-- GỬi đến Giỏ hàng --}}
 			<form action="{{URL::to('/save-cart')}}" method="POST">
 				{{ csrf_field() }}
 				<span>
