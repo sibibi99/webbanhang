@@ -412,11 +412,11 @@
 	
 
   
-    <script src="{{asset('public/frontjs/jquery.js')}}"></script>
-	<script src="{{asset('public/frontjs/bootstrap.min.js')}}"></script>
-	<script src="{{asset('public/frontjs/jquery.scrollUp.min.js')}}"></script>
-	<script src="{{asset('public/frontjs/price-range.js')}}"></script>
-    <script src="{{asset('public/frontjs/jquery.prettyPhoto.js')}}"></script>
-    <script src="{{asset('public/frontjs/main.js')}}"></script>
+    <script src="{{asset('public/frontend/js/jquery.js')}}"></script>
+	<script src="{{asset('public/frontend/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('public/frontend/js/jquery.scrollUp.min.js')}}"></script>
+	<script src="{{asset('public/frontend/js/price-range.js')}}"></script>
+    <script src="{{asset('public/frontend/js/jquery.prettyPhoto.js')}}"></script>
+    <script src="{{asset('public/frontend/js/main.js')}}"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ Route::get('/','App\Http\Controllers\HomeController@index');
 //Front End - Danh muc san pham Trang chu
 Route::get('/danh-muc-san-pham/{category_id}','App\Http\Controllers\CategoryProduct@show_category_home');
 Route::get('/thuong-hieu-san-pham/{brand_slug}','App\Http\Controllers\BrandProduct@show_brand_home');
-Route::get('/chi-tiet-san-pham/{product_slug}','App\Http\Controllers\ProductController@details_product');
+Route::get('/chi-tiet-san-pham/{product_id}','App\Http\Controllers\ProductController@details_product');
 
 
 //Backend
