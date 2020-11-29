@@ -4,9 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <!---------Seo--------->
+    <meta name="description" content="{{$meta_desc}}">
+    <meta name="keywords" content="{{$meta_keywords}}"/>
+    <meta name="robots" content="INDEX,FOLLOW"/>
+    <link  rel="canonical" href="{{$url_canonical}}" />
     <meta name="author" content="">
-    <title>Home | E-Shopper</title>
+    <link  rel="icon" type="image/x-icon" href="" />
+    <title>{{$meta_title}}</title>
     <link href="{{asset('public/frontend/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -155,13 +160,6 @@
 										<li><a href="#">Login</a></li> 
                                     </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="404.html">404</a></li>
 								<li><a href="contact-us.html">Contact</a></li>
 							</ul>
 						</div>
@@ -180,7 +178,7 @@
 		</div><!--/header-bottom-->
 	</header><!--/header-->
 	
-	<section id="slider"><!--slider-->
+	{{-- <section id="slider"><!--slider-->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
@@ -244,7 +242,7 @@
 			</div>
 		</div>
 	</section><!--/slider-->
-	
+	 --}}
 	<section>
 		<div class="container">
 			<div class="row">
@@ -255,7 +253,7 @@
 							@foreach($category as $key => $cate)
 							<div class="panel panel-default">
 								<div class="panel-heading">
-								<h4 class="panel-title"><a href="{{URL::to('/danh-muc-san-pham',$cate->category_id)}}">{{$cate->category_name}}</a></h4>
+								<h4 class="panel-title"><a href="{{URL::to('/danh-muc-san-pham',$cate->slug_category_product)}}">{{$cate->category_name}}</a></h4>
 								</div>
 							</div>
 							@endforeach

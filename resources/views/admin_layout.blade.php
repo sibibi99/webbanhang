@@ -35,6 +35,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
   <script src="{{asset('public/backend/js/raphael-min.js')}}"></script>
   <script src="{{asset('public/backend/js/morris.js')}}"></script>
+  <!--  CK Editor -->
+    <script src="{{asset('public/backend/ckeditor/ckeditor.js')}}"></script>
+      <!-- Form Validator JavaScript -->
+  <script src="{{asset('public/backend/js/form-validato.js')}}"></script>
+
 </head>
 
 <body>
@@ -277,6 +282,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <li class="sub-menu">
               <a href="javascript:;">
                 <i class="fa fa-book"></i>
+                <span>Đơn Hàng</span>
+              </a>
+              <ul class="sub">
+                <li><a href="{{URL::to('/manage-order')}}">Quản Lý Đơn Hàng</a></li>
+
+              </ul>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i class="fa fa-book"></i>
                 <span>Danh Mục Sản Phẩm</span>
               </a>
               <ul class="sub">
@@ -332,7 +347,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <script src="{{asset('public/backend/js/jquery.nicescroll.js')}}"></script>
   <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
   <script src="{{asset('public/backend/js/jquery.scrollTo.js')}}"></script>
-  <!-- morris JavaScript -->
+
   <script>
     $(document).ready(function () {
       //BOX BUTTON SHOW AND CLOSE
@@ -420,6 +435,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
   </script>
   <!-- //calendar -->
+  <script>
+    CKEDITOR.replace('ckeditor');
+    CKEDITOR.replace('ckeditor1');
+  </script>
+  <script type="text/javascript">
+    $.validate({        
+    });
+</script>
 </body>
 
 </html>

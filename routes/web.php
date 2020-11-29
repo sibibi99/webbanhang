@@ -8,7 +8,7 @@ Route::get('/','App\Http\Controllers\HomeController@index');
 Route::post('/tim-kiem','App\Http\Controllers\HomeController@search');
 
 //Front End - Danh muc san pham Trang chu
-Route::get('/danh-muc-san-pham/{category_id}','App\Http\Controllers\CategoryProduct@show_category_home');
+Route::get('/danh-muc-san-pham/{slug_category_product}','App\Http\Controllers\CategoryProduct@show_category_home');
 Route::get('/thuong-hieu-san-pham/{brand_slug}','App\Http\Controllers\BrandProduct@show_brand_home');
 Route::get('/chi-tiet-san-pham/{product_id}','App\Http\Controllers\ProductController@details_product');
 //Cart
@@ -37,7 +37,7 @@ Route::post('/order-place','App\Http\Controllers\CheckoutController@order_place'
 // Route::post('/select-delivery-home','CheckoutController@select_delivery_home');
 // Route::post('/confirm-order','CheckoutController@confirm_order');
 
-//Backend
+// <<<<<<<-------Backend Admin ----------->>
 Route::get('/admin','App\Http\Controllers\AdminController@index');
 Route::get('/dashboad','App\Http\Controllers\AdminController@show_dashboad');
 Route::get('/logout','App\Http\Controllers\AdminController@logout');
@@ -79,3 +79,9 @@ Route::get('/active-product/{product_id}','App\Http\Controllers\ProductControlle
 Route::post('/save-product','App\Http\Controllers\ProductController@save_product');
 Route::post('/update-product/{product_id}','App\Http\Controllers\ProductController@update_product');
 
+//Order
+Route::get('/manage-order','App\Http\Controllers\CheckoutController@manage_order');
+Route::get('/view-order/{orderId}','App\Http\Controllers\CheckoutController@view_order');
+
+// Route::get('/print-order/{checkout_code}','App\Http\Controllers\OrderController@print_order');
+// Route::get('/view-order/{order_code}','OrderController@view_order');
