@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-@foreach($details_product as $key => $value)
+@foreach($product_details as $key => $value)
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
@@ -121,7 +121,7 @@
 	<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner">
 			<div class="item active">
-				@foreach($related as $key => $lienquan)
+				{{-- @foreach($related as $key => $lienquan)
 				<div class="col-sm-4">
 					<div class="product-image-wrapper">
 						<div class="single-products">
@@ -135,7 +135,7 @@
 						</div>
 					</div>
 				</div>
-				@endforeach
+				@endforeach --}}
 
 
 			</div>

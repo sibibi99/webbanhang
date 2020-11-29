@@ -10,7 +10,7 @@ Route::post('/tim-kiem','App\Http\Controllers\HomeController@search');
 //Front End - Danh muc san pham Trang chu
 Route::get('/danh-muc-san-pham/{slug_category_product}','App\Http\Controllers\CategoryProduct@show_category_home');
 Route::get('/thuong-hieu-san-pham/{brand_slug}','App\Http\Controllers\BrandProduct@show_brand_home');
-Route::get('/chi-tiet-san-pham/{product_id}','App\Http\Controllers\ProductController@details_product');
+Route::get('/chi-tiet-san-pham/{product_slug}','App\Http\Controllers\ProductController@details_product');
 //Cart
 Route::post('/save-cart','App\Http\Controllers\CartController@save_cart');
 Route::get('/show-cart','App\Http\Controllers\CartController@show_cart');
@@ -88,3 +88,11 @@ Route::get('/view-order/{orderId}','App\Http\Controllers\CheckoutController@view
 
 //Send Mail 
 Route::get('/send-mail','App\Http\Controllers\HomeController@send_mail');
+
+//Login facebook
+Route::get('/login-facebook','App\Http\Controllers\AdminController@login_facebook');
+Route::get('/admin/callback','App\Http\Controllers\AdminController@callback_facebook');
+
+//Login google
+Route::get('/login-google','App\Http\Controllers\AdminController@login_google');
+Route::get('/google/callback','App\Http\Controllers\AdminController@callback_google');

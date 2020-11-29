@@ -40,7 +40,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng Nhập" name="login">
-		</form>
+				<div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+				<br/>
+				{{-- @if($errors->has('g-recaptcha-response'))
+				<span class="invalid-feedback" style="display:block">
+					<strong>{{$errors->first('g-recaptcha-response')}}</strong>
+				</span>
+				@endif --}}
+				
+			</form>
+			<span><a href="{{URL::to('login-facebook')}}">Đăng nhập bằng Facebook</a></span>
+			<span><a href="{{URL::to('login-google')}}">Đăng nhập bằng Google</a></span>
 
 </div>
 </div>
@@ -51,5 +61,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/js/jquery.nicescroll.js')}}"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 <script src="{{asset('public/backend/js/jquery.scrollTo.js')}}"></script>
+{{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
 </body>
 </html>
