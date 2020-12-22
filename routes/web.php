@@ -12,15 +12,25 @@ Route::get('/danh-muc-san-pham/{slug_category_product}','App\Http\Controllers\Ca
 Route::get('/thuong-hieu-san-pham/{brand_slug}','App\Http\Controllers\BrandProduct@show_brand_home');
 Route::get('/chi-tiet-san-pham/{product_slug}','App\Http\Controllers\ProductController@details_product');
 //Cart
-Route::post('/save-cart','App\Http\Controllers\CartController@save_cart');
-Route::get('/show-cart','App\Http\Controllers\CartController@show_cart');
-Route::get('/delete-to-cart/{rowId}','App\Http\Controllers\CartController@delete_to_cart');
-Route::post('/update-cart-quantity','App\Http\Controllers\CartController@update_cart_quantity');
-// Route::post('/update-cart','CartController@update_cart');
-// Route::post('/add-cart-ajax','CartController@add_cart_ajax');
-// Route::get('/gio-hang','CartController@gio_hang');
-// Route::get('/del-product/{session_id}','CartController@delete_product');
-// Route::get('/del-all-product','CartController@delete_all_product');
+// Route::post('/save-cart','App\Http\Controllers\CartController@save_cart');
+// Route::get('/show-cart','App\Http\Controllers\CartController@show_cart');
+// Route::get('/delete-to-cart/{rowId}','App\Http\Controllers\CartController@delete_to_cart');
+// Route::post('/update-cart-quantity','App\Http\Controllers\CartController@update_cart_quantity');
+// Cart AJAX
+Route::post('/add-cart-ajax','App\Http\Controllers\CartController@add_cart_ajax');
+Route::get('/gio-hang','App\Http\Controllers\CartController@gio_hang');
+Route::post('/update-cart','App\Http\Controllers\CartController@update_cart');
+Route::get('/del-product/{session_id}','App\Http\Controllers\CartController@delete_product');
+Route::get('/del-all-product','App\Http\Controllers\CartController@delete_all_product');
+//Coupon
+Route::post('/check-coupon','App\Http\Controllers\CartController@check_coupon');
+Route::get('/insert-coupon','App\Http\Controllers\CouponController@insert_coupon');
+Route::get('/list-coupon','App\Http\Controllers\CouponController@list_coupon');
+Route::post('/insert-coupon-code','App\Http\Controllers\CouponController@insert_coupon_code');
+
+Route::get('/delete-coupon/{coupon_id}','App\Http\Controllers\CouponController@delete_coupon');
+// Xóa mã khuyến mãi
+Route::get('/unset-coupon','App\Http\Controllers\CouponController@unset_coupon');
 
 //Checkout
 Route::get('/login-checkout','App\Http\Controllers\CheckoutController@login_checkout');
@@ -31,11 +41,11 @@ Route::get('/logout-checkout','App\Http\Controllers\CheckoutController@logout_ch
 Route::post('/login-customer','App\Http\Controllers\CheckoutController@login_customer');
 Route::get('/payment','App\Http\Controllers\CheckoutController@payment');
 Route::post('/order-place','App\Http\Controllers\CheckoutController@order_place');
+Route::post('/select-delivery-home','App\Http\Controllers\CheckoutController@select_delivery_home');
+Route::post('/calculate-free','App\Http\Controllers\CheckoutController@calculate_free');
+Route::get('/del-free','App\Http\Controllers\CheckoutController@del_free');
 
-// Route::get('/del-fee','CheckoutController@del_fee');
-// Route::post('/calculate-fee','CheckoutController@calculate_fee');
-// Route::post('/select-delivery-home','CheckoutController@select_delivery_home');
-// Route::post('/confirm-order','CheckoutController@confirm_order');
+Route::post('/confirm-order','App\Http\Controllers\CheckoutController@confirm_order');
 
 // <<<<<<<-------Backend Admin ----------->>
 Route::get('/admin','App\Http\Controllers\AdminController@index');
@@ -81,10 +91,10 @@ Route::post('/update-product/{product_id}','App\Http\Controllers\ProductControll
 
 //Order
 Route::get('/manage-order','App\Http\Controllers\CheckoutController@manage_order');
-Route::get('/view-order/{orderId}','App\Http\Controllers\CheckoutController@view_order');
+Route::get('/view-order/{order_code}','App\Http\Controllers\OrderController@view_order');
 
-// Route::get('/print-order/{checkout_code}','App\Http\Controllers\OrderController@print_order');
-// Route::get('/view-order/{order_code}','OrderController@view_order');
+Route::get('/print-order/{checkout_code}','App\Http\Controllers\OrderController@print_order');
+Route::get('/view-order/{order_code}','App\Http\Controllers\OrderController@view_order');
 
 //Send Mail 
 Route::get('/send-mail','App\Http\Controllers\HomeController@send_mail');
@@ -96,3 +106,11 @@ Route::get('/admin/callback','App\Http\Controllers\AdminController@callback_face
 //Login google
 Route::get('/login-google','App\Http\Controllers\AdminController@login_google');
 Route::get('/google/callback','App\Http\Controllers\AdminController@callback_google');
+
+//Delivery
+Route::get('/delivery','App\Http\Controllers\DeliveryController@delivery');
+Route::post('/select-delivery','App\Http\Controllers\DeliveryController@select_delivery');
+Route::post('/insert-delivery','App\Http\Controllers\DeliveryController@insert_delivery');
+// Đưa Phí vận chuyển bằng AJAX ra bảng
+Route::post('/select-freeship','App\Http\Controllers\DeliveryController@select_freeship');
+Route::post('/update-delivery','App\Http\Controllers\DeliveryController@update_delivery');

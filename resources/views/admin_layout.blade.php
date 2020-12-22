@@ -319,6 +319,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li><a href="{{URL::to('/all-product')}}">Liệt Kê Thương Hiệu Sản Phẩm</a></li>
               </ul>
             </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i class="fa fa-book"></i>
+                <span>Mã Giảm Giá</span>
+              </a>
+              <ul class="sub">
+                <li><a href="{{URL::to('/insert-coupon')}}">Thêm mã giảm giá</a></li>
+                <li><a href="{{URL::to('/list-coupon')}}">Liệt kê mã giảm giá</a></li>                        
+              
+            </ul>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:;">
+                <i class="fa fa-book"></i>
+                <span>Vận Chuyển</span>
+              </a>
+              <ul class="sub">
+                <li><a href="{{URL::to('/delivery')}}">Quản lý vận chuyển</a></li>              
+            </ul>
+            </li>
           </ul>
         </div>
         <!-- sidebar menu end-->
@@ -340,6 +360,81 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </section>
     <!--main content end-->
   </section>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+      fetch_delivery();
+      
+      // <!--Lấy dữ liệu AJAX ra bảng phí-->
+      function fetch_delivery(){
+    var _token = $('input[name="_token"]').val();
+     $.ajax({
+        url : '{{url('/select-freeship')}}',
+        method: 'POST',
+        data:{_token:_token},
+        success:function(data){
+           $('#load_delivery').html(data);
+        }
+    });
+  }
+  $(document).on('blur','.free_freeship_edit',function(){
+
+    var freeship_id = $(this).data('freeship_id');
+    var free_value = $(this).text();
+     var _token = $('input[name="_token"]').val();
+    // alert(feeship_id);
+    // alert(fee_value);
+    $.ajax({
+        url : '{{url('/update-delivery')}}',
+        method: 'POST',
+        data:{freeship_id:freeship_id, free_value:free_value, _token:_token},
+        success:function(data){
+           fetch_delivery();
+        }
+    });
+
+});
+      $('.add_delivery').click(function(){  
+
+      var city = $('.city').val();
+      var province = $('.province').val();
+      var wards = $('.wards').val();
+      var free_ship = $('.free_ship').val();
+      var _token = $('input[name="_token"]').val();
+
+ $.ajax({
+   url : '{{url('/insert-delivery')}}',
+   method: 'POST',
+   data:{city:city, province:province, _token:_token, wards:wards, free_ship:free_ship},
+   success:function(data){
+
+     fetch_delivery();
+    }
+  });
+
+});
+$('.choose').on('change',function(){
+ var action = $(this).attr('id');
+ var ma_id = $(this).val();
+ var _token = $('input[name="_token"]').val();
+ var result = '';
+
+ if(action=='city'){
+     result = 'province';
+ }else{
+     result = 'wards';
+ }
+ $.ajax({
+     url : '{{url('/select-delivery')}}',
+     method: 'POST',
+     data:{action:action,ma_id:ma_id,_token:_token},
+     success:function(data){
+        $('#'+result).html(data);     
+     }
+ });
+}); 
+    })
+  </script>
   <script src="{{asset('public/backend/js/bootstrap.js')}}"></script>
   <script src="{{asset('public/backend/js/jquery.dcjqaccordion.2.7.js')}}"></script>
   <script src="{{asset('public/backend/js/scripts.js')}}"></script>
@@ -405,36 +500,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   </script>
   <!-- calendar -->
   <script type="text/javascript" src="{{asset('public/backend/js/monthly.js')}}"></script>
-  <script type="text/javascript">
-    $(window).load(function () {
 
-      $('#mycalendar').monthly({
-        mode: 'event',
-
-      });
-
-      $('#mycalendar2').monthly({
-        mode: 'picker',
-        target: '#mytarget',
-        setWidth: '250px',
-        startHidden: true,
-        showTrigger: '#mytarget',
-        stylePast: true,
-        disablePast: true
-      });
-
-      switch (window.location.protocol) {
-        case 'http:':
-        case 'https:':
-          // running on a server, should be good.
-          break;
-        case 'file:':
-          alert('Just a heads-up, events will not work when run locally.');
-      }
-
-    });
-  </script>
   <!-- //calendar -->
+  <!-- PHƯỜNG XÃ QUẬN HUYÊN -->
+
+
   <script>
     CKEDITOR.replace('ckeditor');
     CKEDITOR.replace('ckeditor1');
@@ -443,6 +513,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     $.validate({        
     });
 </script>
+
 </body>
 
 </html>

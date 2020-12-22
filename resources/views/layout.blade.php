@@ -19,6 +19,8 @@
     <link href="{{asset('public/frontend/css/animate.css')}}" rel="stylesheet">
 	<link href="{{asset('public/frontend/css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('public/frontend/css/responsive.css')}}" rel="stylesheet">
+	    <!------Sweet Alert------->
+	<link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -93,7 +95,7 @@
 						<div class="shop-menu pull-right">
 							  <ul class="nav navbar-nav">
                                
-                                <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
+                                {{-- <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
                                 <?php
                                    $customer_id = Session::get('customer_id');
                                    $shipping_id = Session::get('shipping_id');
@@ -112,9 +114,9 @@
                                 <?php
                                  }
                                 ?>
-                                
+                                 --}}
 
-                                <li><a href="{{URL::to('/show-cart')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                 <?php
                                    $customer_id = Session::get('customer_id');
                                    if($customer_id!=NULL){ 
@@ -263,9 +265,10 @@
 							<h2>Thương Hiệu</h2>
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
-									@foreach($brand as $key => $brand)
-								<li><a href="{{URL::to('/thuong-hieu-san-pham',$brand->brand_id)}}"> <span class="pull-right">(50)</span>{{$brand->brand_name}}</a></li>
-									@endforeach
+                  @foreach($brand as $key => $brand)
+                  <li><a href="{{URL::to('/thuong-hieu-san-pham/'.$brand->brand_slug)}}"> <span
+                        class="pull-right">(50)</span>{{$brand->brand_name}}</a></li>
+                  @endforeach
 								</ul>
 							</div>
 						</div><!--/brands_products-->
@@ -446,13 +449,156 @@
 	
 
   
-    <script src="{{asset('public/frontend/js/jquery.js')}}"></script>
+   <script src="{{asset('public/frontend/js/jquery.js')}}"></script>
 	<script src="{{asset('public/frontend/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('public/frontend/js/jquery.scrollUp.min.js')}}"></script>
 	<script src="{{asset('public/frontend/js/price-range.js')}}"></script>
-    <script src="{{asset('public/frontend/js/jquery.prettyPhoto.js')}}"></script>
-		<script src="{{asset('public/frontend/js/main.js')}}"></script>
+  <script src="{{asset('public/frontend/js/jquery.prettyPhoto.js')}}"></script>
+	<script src="{{asset('public/frontend/js/main.js')}}"></script>
+	<!--Thêm thư viện mới-->
+	<script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
+	{{-- <script src="{{asset('public/frontend/js/custom.js')}}"></script> --}}
+
+
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+		<script type="text/javascript">
+
+			$(document).ready(function () {
+				$('.send_order').click(function(){
+                swal({
+                  title: "Xác nhận đơn hàng",
+                  text: "Đơn hàng sẽ không được hoàn trả khi đặt,bạn có muốn đặt không?",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Cảm ơn, Mua hàng",
+
+                    cancelButtonText: "Đóng,chưa mua",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm){
+                     if (isConfirm) {
+                        var shipping_email = $('.shipping_email').val();
+                        var shipping_name = $('.shipping_name').val();
+                        var shipping_address = $('.shipping_address').val();
+                        var shipping_phone = $('.shipping_phone').val();
+                        var shipping_notes = $('.shipping_notes').val();
+                        var shipping_method = $('.payment_select').val();
+                        var order_free = $('.order_free').val();
+                        var order_coupon = $('.order_coupon').val();
+                        var _token = $('input[name="_token"]').val();
+
+                        $.ajax({
+                            url: '{{url('/confirm-order')}}',
+                            method: 'POST',
+                            data:{shipping_email:shipping_email,shipping_name:shipping_name,shipping_address:shipping_address,shipping_phone:shipping_phone,shipping_notes:shipping_notes,_token:_token,order_free:order_free,order_coupon:order_coupon,shipping_method:shipping_method},
+                            success:function(){
+                               swal("Đơn hàng", "Đơn hàng của bạn đã được gửi thành công", "success");
+                            }
+                        });
+
+                        window.setTimeout(function(){ 
+                            location.reload();
+                        } ,3000);
+
+                      } else {
+                        swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
+
+                      }
+              
+                });
+
+               
+            });
+        });
+		</script>
+
+		<script>
+			$(document).ready(function () {
+				// Thêm giỏ hàng bằng AJAX
+				$('.add-to-cart').click(function () {
+					var id = $(this).data('id_product');
+					var cart_product_id = $('.cart_product_id_' + id).val();
+					var cart_product_name = $('.cart_product_name_' + id).val();
+					var cart_product_image = $('.cart_product_image_' + id).val();
+					var cart_product_price = $('.cart_product_price_' + id).val();
+					var cart_product_qty = $('.cart_product_qty_' + id).val();
+					var _token = $('input[name="_token"]').val();
+					// alert(_token);
+					$.ajax({
+						url: '{{url('/add-cart-ajax')}}',
+						method: 'POST',
+						data: { cart_product_id: cart_product_id, cart_product_name: cart_product_name, cart_product_image: cart_product_image, cart_product_price: cart_product_price, cart_product_qty: cart_product_qty, _token: _token },
+						success: function () {
+	
+							swal({
+								title: "Đã thêm sản phẩm vào giỏ hàng",
+								text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+								showCancelButton: true,
+								cancelButtonText: "Xem tiếp",
+								confirmButtonClass: "btn-success",
+								confirmButtonText: "Đi đến giỏ hàng",
+								closeOnConfirm: false
+							},
+								function () {
+									window.location.href = "{{url('/gio-hang')}}";
+								});
+						}
+					});
+				});
+			});
+	</script>
+	<script type="text/javascript">
+	// CHọn địa chỉ ở CheckOut
+		$(document).ready(function () {
+			$('.choose').on('change', function () {
+				var action = $(this).attr('id');
+				var ma_id = $(this).val();
+				var _token = $('input[name="_token"]').val();
+				var result = '';
+	
+				if (action == 'city') {
+					result = 'province';
+				} else {
+					result = 'wards';
+				}
+				$.ajax({
+					url: '{{url('/select-delivery-home')}}',
+					method: 'POST',
+					data: { action: action, ma_id: ma_id, _token: _token },
+					success: function (data) {
+						$('#' + result).html(data);
+					}
+				});
+			});
+		});
+	
+	</script>
+	<script type="text/javascript">
+		// Khi bấm Tính phí Vận chuyển
+		$(document).ready(function () {
+			$('.calculate_delivery').click(function () {
+				var matp = $('.city').val();
+				var maqh = $('.province').val();
+				var xaid = $('.wards').val();
+				var _token = $('input[name="_token"]').val();
+				if (matp == '' && maqh == '' && xaid == '') {
+					alert('Làm ơn chọn để tính phí vận chuyển');
+				} else {
+					$.ajax({
+						url: '{{url('/calculate-free')}}',
+						method: 'POST',
+						data: { matp: matp, maqh: maqh, xaid: xaid, _token: _token },
+						success: function () {
+							location.reload();
+						}
+					});
+				}
+			});
+		});
+	</script>
 
 </body>
 </html>

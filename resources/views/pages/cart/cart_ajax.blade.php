@@ -9,6 +9,7 @@
 				  <li class="active">Giỏ hàng của bạn</li>
 				</ol>
 			</div>
+									<!--Thông báo khi xóa thành Công-->						
 			  @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
@@ -34,13 +35,16 @@
 						</tr>
 					</thead>
 					<tbody>
+						<!--Dùng Giỏ hàng bằng AJAX-->						
 						@if(Session::get('cart')==true)
 						@php
 								$total = 0;
 						@endphp
 						@foreach(Session::get('cart') as $key => $cart)
-							@php
+						@php
+								// <!--Tiền trên từng sản phẩm-->						
 								$subtotal = $cart['product_price']*$cart['product_qty'];
+								// <!--Tổng số tiền-->						
 								$total+=$subtotal;
 							@endphp
 
@@ -56,12 +60,8 @@
 								<p>{{number_format($cart['product_price'],0,',','.')}}đ</p>
 							</td>
 							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-								
-								
+								<div class="cart_quantity_button">												
 									<input class="cart_quantity" type="number" min="1" name="cart_qty[{{$cart['session_id']}}]" value="{{$cart['product_qty']}}"  >
-								
-									
 								</div>
 							</td>
 							<td class="cart_total">
@@ -80,20 +80,20 @@
 							<td><input type="submit" value="Cập nhật giỏ hàng" name="update_qty" class="check_out btn btn-default btn-sm"></td>
 							<td><a class="btn btn-default check_out" href="{{url('/del-all-product')}}">Xóa tất cả</a></td>
 							<td>
+										<!--NẾU CÓ COUPON MỚI CHO XÓA MÃ-->		
 								@if(Session::get('coupon'))
 	                          	<a class="btn btn-default check_out" href="{{url('/unset-coupon')}}">Xóa mã khuyến mãi</a>
 								@endif
 							</td>
 
 							<td>
-								@if(Session::get('customer'))
+								@if(Session::get('customer_id'))
 	                          	<a class="btn btn-default check_out" href="{{url('/checkout')}}">Đặt hàng</a>
 	                          	@else 
 	                          	<a class="btn btn-default check_out" href="{{url('/login-checkout')}}">Đặt hàng</a>
 								@endif
 							</td>
-
-							
+		
 							<td colspan="2">
 							<li>Tổng tiền :<span>{{number_format($total,0,',','.')}}đ</span></li>
 							@if(Session::get('coupon'))
@@ -104,6 +104,7 @@
 											Mã giảm : {{$cou['coupon_number']}} %
 											<p>
 												@php 
+												//Giảm theo Phần trăm
 												$total_coupon = ($total*$cou['coupon_number'])/100;
 												echo '<p><li>Tổng giảm:'.number_format($total_coupon,0,',','.').'đ</li></p>';
 												@endphp
@@ -113,6 +114,7 @@
 											Mã giảm : {{number_format($cou['coupon_number'],0,',','.')}} k
 											<p>
 												@php 
+												//Giảm theo Số tiền
 												$total_coupon = $total - $cou['coupon_number'];
 								
 												@endphp
@@ -127,39 +129,40 @@
 							@endif 
 						{{-- 	<li>Thuế <span></span></li>
 							<li>Phí vận chuyển <span>Free</span></li> --}}
-							
-							
+		
 						</td>
 						</tr>
 						@else 
 						<tr>
 							<td colspan="5"><center>
 							@php 
-							echo 'Làm ơn thêm sản phẩm vào giỏ hàng';
+							// Thông báo khi Không có sản phẩm trong giỏ
+							
+							echo '<div class="alert alert-danger">
+                        Vui lòng thêm sản phẩm vào giỏ hàng!
+                    </div>';
 							@endphp
 							</center></td>
 						</tr>
 						@endif
 					</tbody>
-
-					
-
 				</form>
-					@if(Session::get('cart'))
-					<tr><td>
 
+				<!--NẾU CÓ SẢN PHẨM TRONG GIỎ MỚI CHO NHẬP GIẢM GIÁ-->
+					@if(Session::get('cart'))
+					<tr>
+						<td>
+							<!--TÍNH MÃ GIẢM GIÁ-->
 							<form method="POST" action="{{url('/check-coupon')}}">
 								@csrf
 									<input type="text" class="form-control" name="coupon" placeholder="Nhập mã giảm giá"><br>
 	                          		<input type="submit" class="btn btn-default check_coupon" name="check_coupon" value="Tính mã giảm giá">
 	                          	
-                          		</form>
-                          	</td>
+               	</form>
+               </td>
 					</tr>
 					@endif
-
 				</table>
-
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
