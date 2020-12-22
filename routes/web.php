@@ -114,3 +114,10 @@ Route::post('/insert-delivery','App\Http\Controllers\DeliveryController@insert_d
 // Đưa Phí vận chuyển bằng AJAX ra bảng
 Route::post('/select-freeship','App\Http\Controllers\DeliveryController@select_freeship');
 Route::post('/update-delivery','App\Http\Controllers\DeliveryController@update_delivery');
+
+// Banner
+Route::get('/manage-slider','App\Http\Controllers\SliderController@manage_slider');
+Route::get('/add-slider','App\Http\Controllers\SliderController@add_slider');
+Route::get('/unactive-slider/{slider_id}','App\Http\Controllers\SliderController@unactive_slider');
+Route::get('/active-slider/{slider_id}','App\Http\Controllers\SliderController@active_slider');
+Route::post('/insert-slider','App\Http\Controllers\SliderController@insert_slider');

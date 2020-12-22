@@ -8,11 +8,15 @@ use Session;
 use App\Http\Requests;
 use Mail;
 use Illuminate\Support\Facades\Redirect;
+
+use App\Models\Slider;
 session_start();
 
 class HomeController extends Controller
 {
     public function index(Request $request){
+        //Slider
+        $slider = Slider::orderBy('slider_id', 'DESC')->take(4)->get();
         //seo 
         $meta_desc = "Chuyên bán những phụ kiện gym và thực phẩm dinh dưỡng, Là 1 gymer ngoài việc có body đẹp cần là 1 người có ích trong xã hội: trí tuệ, sức khỏe"; 
         $meta_keywords = "thuc pham chuc nang, thực phẩm chức năng, phụ kiện gym";
@@ -25,7 +29,7 @@ class HomeController extends Controller
 
         $all_product = DB::table('tbl_product')->where('product_status', '0')->orderby('brand_id','desc')->limit(12)->get(); 
 
-        return view('pages.home')->with('category',$cate_product)->with('brand',$brand_product)->with('all_product',$all_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical); //1
+        return view('pages.home')->with('category',$cate_product)->with('brand',$brand_product)->with('all_product',$all_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider', $slider); //1
                 // return view('pages.home')->with(compact('cate_product','brand_product','all_product')); //Cách 2, đổi biến Foreach
 
     }

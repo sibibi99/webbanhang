@@ -279,6 +279,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <span>Tổng Quan</span>
               </a>
             </li>
+            <li>
+              <a class="active" href="{{URL::to('/manage-slider')}}">
+                <i class="fa fa-dashboard"></i>
+                <span>Baner</span>
+              </a>
+            </li>
             <li class="sub-menu">
               <a href="javascript:;">
                 <i class="fa fa-book"></i>

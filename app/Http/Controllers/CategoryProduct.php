@@ -82,7 +82,7 @@ class CategoryProduct extends Controller
         $data = array();
         $data['category_name'] = $request->category_product_name;
         // Từ Khóa SEO
-        $data['category_product_keywords'] = $request->meta_keywords;
+        $data['meta_keywords'] = $request->category_product_keywords;
         $data['category_desc'] = $request->category_product_desc;
         $data['category_status'] = $request->category_product_status;
         
